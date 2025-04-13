@@ -24,7 +24,7 @@
 
 ### Backend Services
 - Authentication API
-- Coin Generation API
+- Trillion Game API
 - Payment Processing API
 - Admin Dashboard
 

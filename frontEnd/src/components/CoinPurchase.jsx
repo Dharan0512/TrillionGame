@@ -20,7 +20,7 @@ const CoinPurchase = () => {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: amount * 100,
       currency: 'INR',
-      name: 'CoinGen App',
+      name: 'Trillion Game App',
       description: `Purchase coins package`,
       order_id: orderId,
       handler: async function (response) {

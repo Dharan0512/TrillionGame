@@ -25,7 +25,6 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const User = require('../models/User');
 const CoinGeneration = require('../models/CoinGeneration');
-const { Op } = require('sequelize');
 
 // Test route
 router.get('/user', (req, res) => {

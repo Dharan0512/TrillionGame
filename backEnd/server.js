@@ -12,7 +12,7 @@ const userRoutes = require('./routes/user');
 const coinRoutes = require('./routes/coins');
 const paymentRoutes = require('./routes/payment');
 const packageRoutes = require('./routes/packages');
-
+const vechileLocationRoutes = require("./routes/vechileLocationRoutes")
 // Database connection
 const db = require('./config/database');
 
@@ -45,6 +45,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/coins', coinRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/packages', packageRoutes);
+app.use('/api/location',vechileLocationRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

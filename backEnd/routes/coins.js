@@ -32,7 +32,7 @@ router.post('/update', authMiddleware, async (req, res) => {
     const currentHour = new Date().getHours();
     const isEndOfDay = currentHour >= 23; // For example, if it's 11 PM or later
 
-    if (isEndOfDay) {
+    if (isEndOfDay || true) {
       // Convert coins to rupees
       const conversionRate = 0.1; // Example: 1 coin = 0.1 rupees
       const rupeesEarned = coins * conversionRate;

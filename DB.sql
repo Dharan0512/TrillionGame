@@ -1,0 +1,73 @@
+-- Create Database
+CREATE DATABASE IF NOT EXISTS trilliongame;
+USE trilliongame;
+
+-- Users Table
+CREATE TABLE IF NOT EXISTS Users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  currentCoins INT DEFAULT 0,
+  totalEarnings DECIMAL(10, 2) DEFAULT 0.00,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Coin Generation History Table
+CREATE TABLE IF NOT EXISTS CoinGenerations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT NOT NULL,
+  coinsGenerated INT NOT NULL,
+  conversionRate DECIMAL(10, 4) NOT NULL,
+  rupeesEarned DECIMAL(10, 2) NOT NULL,
+  date DATE NOT NULL,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
+);
+
+-- Packages Table
+CREATE TABLE IF NOT EXISTS Packages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  coins INT NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  active BOOLEAN DEFAULT TRUE,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Payments Table
+CREATE TABLE IF NOT EXISTS Payments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT NOT NULL,
+  packageId INT NOT NULL,
+  amount DECIMAL(10, 2) NOT NULL,
+  coinsPurchased INT NOT NULL,
+  razorpayOrderId VARCHAR(255) NOT NULL,
+  razorpayPaymentId VARCHAR(255),
+  status ENUM('created', 'completed', 'failed') DEFAULT 'created',
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE,
+  FOREIGN KEY (packageId) REFERENCES Packages(id) ON DELETE CASCADE
+);
+DELETE FROM packages;
+
+TRUNCATE TABLE package;
+-- Insert default coin packages
+INSERT INTO Packages (name, coins, price, active) VALUES
+('Starter Pack', 500, 480, TRUE),
+('Silver Pack', 1000, 950, true),
+('Gold Pack', 2000, 1850, true),
+('Premium Pack', 5000, 4500, TRUE);
+
+
+
+SHOW TABLES;
+
+SELECT * FROM coingenerations;
+SELECT * FROM packages;
+SELECT * FROM payments;
+SELECT * FROM users;

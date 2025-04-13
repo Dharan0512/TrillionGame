@@ -14,11 +14,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/dashboard">CoinGen</Link>
+        <Link to="/dashboard">Trillion Game</Link>
       </div>
       <div className="navbar-links">
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/purchase">Buy Coins</Link>
+        <Link to="/navigator">Map</Link>
         <Link to="/profile">Profile</Link>
       </div>
       <div className="navbar-user">

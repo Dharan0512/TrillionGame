@@ -75,20 +75,23 @@ const Dashboard = () => {
 
         <div className="coin-generator">
           <h2>Generate Coins</h2>
-          <button className="generate-btn" onClick={handleGenerateCoins}>
-            Click to Generate Coins
-          </button>
+          <div className='d-flex justify-content-evenly'>
+          
           {lastUpdated && (
             <p className="last-updated">
               Last updated: {lastUpdated.toLocaleTimeString()}
             </p>
           )}
+          <button className="generate-btn" onClick={handleGenerateCoins}>
+            Click to Generate Coins
+          </button>
           <button 
             className="update-btn" 
             onClick={updateCoinsInDatabase}
           >
             Save Coins to Database
           </button>
+          </div>
         </div>
 
         <div className="action-buttons">

@@ -1,5 +1,5 @@
 // src/components/Profile.js
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import Navbar from './Navbar';
 import { useAPIContext } from '../context/APIContext';
 import { format } from 'date-fns';
@@ -44,28 +44,7 @@ const Profile = () => {
         
         <div className="history-section">
           <h2>Earnings History</h2>
-          {earningsHistory.length > 0 ? (
-            <table className="history-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Coins Generated</th>
-                  <th>Rupees Earned</th>
-                </tr>
-              </thead>
-              <tbody>
-                {earningsHistory.map(record => (
-                  <tr key={record.id}>
-                    <td>{format(new Date(record.date), 'dd/MM/yyyy')}</td>
-                    <td>{record.coinsGenerated}</td>
-                    <td>₹{record.rupeesEarned}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No earnings history yet.</p>
-          )}
+          <EarningsTable earningsHistory={earningsHistory}/>
         </div>
         
         <div className="history-section">
@@ -105,5 +84,66 @@ const Profile = () => {
     </div>
   );
 };
+
+const EarningsTable = ({ earningsHistory }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 5;
+
+  const totalPages = Math.ceil(earningsHistory.length / recordsPerPage);
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = earningsHistory.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const handlePrev = () => {
+    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+  };
+
+  return (
+    <>
+      {earningsHistory.length > 0 ? (
+        <>
+          <table className="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Coins Generated</th>
+                <th>Rupees Earned</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentRecords.map(record => (
+                <tr key={record.id}>
+                  <td>{format(new Date(record.date), 'dd/MM/yyyy')}</td>
+                  <td>{record.coinsGenerated}</td>
+                  <td>₹{record.rupeesEarned}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="pagination-controls d-flex justify-content-center" style={{ marginTop: '10px' }}>
+            <button onClick={handlePrev} disabled={currentPage === 1}>
+              Previous
+            </button>
+            <span style={{ margin: '10px' }}>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={handleNext} disabled={currentPage === totalPages}>
+              Next
+            </button>
+          </div>
+        </>
+      ) : (
+        <p>No earnings history yet.</p>
+      )}
+    </>
+  );
+};
+
+
 
 export default Profile;

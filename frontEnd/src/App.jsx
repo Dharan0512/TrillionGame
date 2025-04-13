@@ -1,16 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
-import Dashboard from './components/Dashboard';
-import CoinPurchase from './components/CoinPurchase';
-import Profile from './components/Profile';
-import PrivateRoute from './components/PrivateRoute';
-import { AuthProvider } from './context/AuthContext';
-import { APIProvider } from './context/APIContext';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
+import CoinPurchase from "./components/CoinPurchase";
+import Profile from "./components/Profile";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { APIProvider } from "./context/APIContext";
+import "./App.css";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navigator from "./components/Navigator";
+import { MapProvider } from "./context/MapContext";
 function App() {
   return (
     <AuthProvider>
@@ -20,30 +27,41 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route 
-                path="/dashboard" 
+              <Route
+                path="/dashboard"
                 element={
                   <PrivateRoute>
                     <Dashboard />
                   </PrivateRoute>
-                } 
+                }
               />
-              <Route 
-                path="/purchase" 
+              <Route
+                path="/purchase"
                 element={
                   <PrivateRoute>
                     <CoinPurchase />
                   </PrivateRoute>
-                } 
+                }
               />
-              <Route 
-                path="/profile" 
+              <Route
+                path="/profile"
                 element={
                   <PrivateRoute>
                     <Profile />
                   </PrivateRoute>
-                } 
+                }
               />
+              <Route
+                path="/navigator"
+                element={
+                  <MapProvider>
+                    <PrivateRoute>
+                      <Navigator />
+                    </PrivateRoute>
+                  </MapProvider>
+                }
+              />
+
               <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
           </div>
@@ -52,4 +70,4 @@ function App() {
     </AuthProvider>
   );
 }
-export default App
+export default App;
